@@ -10,7 +10,7 @@ const AWS = require('aws-sdk');
 exports.handler = async (event) => {
   //console log for making sure event is being picked up
   console.log('We hit the event!', event);
-  const requestBody = JSON.parse(event.body);
+  const requestBody = JSON.parse(event);
   const { user, scene, userChoice } = requestBody;
 
   if (!requestBody.roll) {
