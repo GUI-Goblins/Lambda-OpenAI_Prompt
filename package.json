@@ -9,7 +9,7 @@
   "name": "lambda-openai-prompt",
   "description": "## Purpose",
   "version": "1.0.0",
-  "main": "prompt.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest --verbose --coverage"
   },
