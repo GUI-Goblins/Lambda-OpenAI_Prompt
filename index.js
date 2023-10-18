@@ -4,8 +4,6 @@ require('dotenv').config();
 const AWS = require('aws-sdk');
 const OpenAI = require('openai');
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
-
-const AWS = require('aws-sdk');
 // const OPEN_AI_URL = process.env.OPEN_AI_URL;
 const lambda = new AWS.Lambda();
 
