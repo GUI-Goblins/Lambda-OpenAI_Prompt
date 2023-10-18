@@ -1,6 +1,7 @@
 'use strict';
 
 require('dotenv').config();
+const AWS = require('aws-sdk');
 const OpenAI = require('openai');
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
@@ -26,10 +27,24 @@ exports.handler = async (event) => {
     };
     console.log('Here is our data:', data);
     try {
-      const response = await openai.chat.completions.create(data);
-      const responseData = response.choices[0].message.content;
+      const res = await openai.chat.completions.create(data);
+      const responseData = res.choices[0].message.content;
 
-      return responseData;
+      // return responseData;
+      const lambda = new AWS.Lambda();
+
+      const params = {
+        FunctionName: 'characterRoll',
+        InvocationType: 'Event',
+        Payload: JSON.stringify(responseData),
+      };
+
+      const response = await lambda.invoke(params).promise();
+      console.log("HERES THE RESPONSE FROM CHAR ROLL", response.body);
+
+      if (response.FunctionError) {
+        throw new Error(`Lambda invocation error: ${response.FunctionError}`);
+      }
     } catch (error) {
       //console log for showing the error
       console.error('Encountered error with prompt request to OpenAI', error);
@@ -46,10 +61,24 @@ exports.handler = async (event) => {
     };
     console.log('Here is our data:', data);
     try {
-      const response = await openai.chat.completions.create(data);
-      const responseData = response.choices[0].message.content;
+      const res = await openai.chat.completions.create(data);
+      const responseData = res.choices[0].message.content;
 
-      return responseData;
+      // return responseData;
+      const lambda = new AWS.Lambda();
+
+      const params = {
+        FunctionName: 'characterRoll',
+        InvocationType: 'Event',
+        Payload: JSON.stringify(responseData),
+      };
+
+      const response = await lambda.invoke(params).promise();
+      console.log('HERES THE RESPONSE FROM CHAR ROLL', response.body);
+
+      if (response.FunctionError) {
+        throw new Error(`Lambda invocation error: ${response.FunctionError}`);
+      }
     } catch (error) {
       //console log for showing the error
       console.error('Encountered error with prompt request to OpenAI', error);
