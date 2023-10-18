@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1474.0",
+    "axios": "^1.5.1",
+    "dotenv": "^16.3.1",
+    "jest": "^29.7.0",
+    "openai": "^4.12.3"
+  },
+  "name": "lambda-openai-prompt",
+  "description": "## Purpose",
+  "version": "1.0.0",
+  "main": "prompt.js",
+  "scripts": {
+    "test": "jest --verbose --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
