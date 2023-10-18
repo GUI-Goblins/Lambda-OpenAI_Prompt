@@ -1,4 +1,4 @@
-# Lambda-OpenAI_Prompt
+# lambda-openai-prompt
 
 ## Purpose 
 
