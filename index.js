@@ -7,6 +7,7 @@ const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 const AWS = require('aws-sdk');
 // const OPEN_AI_URL = process.env.OPEN_AI_URL;
+const lambda = new AWS.Lambda();
 
 exports.handler = async (event) => {
   //console log for making sure event is being picked up
@@ -31,7 +32,6 @@ exports.handler = async (event) => {
       const responseData = res.choices[0].message.content;
 
       // return responseData;
-      const lambda = new AWS.Lambda();
 
       const params = {
         FunctionName: 'characterRoll',
@@ -65,7 +65,6 @@ exports.handler = async (event) => {
       const responseData = res.choices[0].message.content;
 
       // return responseData;
-      const lambda = new AWS.Lambda();
 
       const params = {
         FunctionName: 'characterRoll',
