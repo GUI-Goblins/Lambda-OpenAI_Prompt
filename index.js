@@ -1,15 +1,11 @@
 'use strict';
 
 require('dotenv').config();
-const AWS = require('aws-sdk');
-// const OpenAI = require('openai');
-// const openai = new OpenAI(process.env.OPENAI_API_KEY);
-// const OPEN_AI_URL = process.env.OPEN_AI_URL;
+import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda';
+const lambda = new LambdaClient({ region: 'us-west-2' });
 const axios = require('axios');
 const OPEN_AI_URL = process.env.OPEN_AI_URL;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-
-const lambda = new AWS.Lambda();
 
 exports.handler = async (event) => {
   //console log for making sure event is being picked up
@@ -46,9 +42,12 @@ exports.handler = async (event) => {
         Payload: JSON.stringify(openAi),
       };
 
-      const response = await lambda.invoke(params).promise();
+      const response = await lambda.send(new InvokeCommand(params));
+
+      const payload = Buffer.from(response.Payload).toString();
+
       console.log('Response from characterRoll:', response);
-      const result = JSON.parse(response.Payload);
+      const result = JSON.parse(payload);
 
       // Perform additional processing if needed
       return {
@@ -87,14 +86,16 @@ exports.handler = async (event) => {
       const params = {
         FunctionName: 'characterRoll',
         InvocationType: 'RequestResponse',
-        // Payload: JSON.stringify(responseData),
         Payload: JSON.stringify(openAi),
       };
 
-      const response = await lambda.invoke(params).promise();
+      const response = await lambda.send(new InvokeCommand(params));
 
-      const result = JSON.parse(response.Payload);
-      console.log('Result from characterRoll:', result);
+      const payload = Buffer.from(response.Payload).toString();
+
+      console.log('Response from characterRoll:', response);
+      
+      const result = JSON.parse(payload);
       // Perform additional processing if needed
       return {
         statusCode: 200,
