@@ -8,7 +8,6 @@ const OPEN_AI_URL = process.env.OPEN_AI_URL;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 exports.handler = async (event) => {
-  //console log for making sure event is being picked up
   console.log('We hit the event!', event);
   const requestBody = event.body;
   const user = event.user;
@@ -49,20 +48,11 @@ exports.handler = async (event) => {
       console.log('Response from characterRoll:', response, payload);
       const result = JSON.parse(payload);
 
-      // Perform additional processing if needed
       return {
         statusCode: 200,
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
         body: JSON.stringify(result),
       };
-
-      // if (response.FunctionError) {
-      //   throw new Error(`Lambda invocation error: ${response.FunctionError}`);
-      // }
     } catch (error) {
-      //console log for showing the error
       console.error('Encountered error with prompt request to OpenAI', error);
     }
   } else {
@@ -80,9 +70,6 @@ exports.handler = async (event) => {
       const openAiResponse = await axios.post(OPEN_AI_URL, data, header);
       const openAi = openAiResponse.data.choices[0].message.content;
       console.log('Here is our open ai response before being parsed:', openAi);
-      // const responseData = JSON.parse(openAi);
-      // console.log('Here is our open ai response:', responseData);
-
       const params = {
         FunctionName: 'characterRoll',
         InvocationType: 'RequestResponse',
@@ -96,20 +83,11 @@ exports.handler = async (event) => {
       console.log('Response from characterRoll:', response);
 
       const result = JSON.parse(payload);
-      // Perform additional processing if needed
       return {
         statusCode: 200,
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
         body: JSON.stringify(result),
       };
-
-      // if (response.FunctionError) {
-      //   throw new Error(`Lambda invocation error: ${response.FunctionError}`);
-      // }
     } catch (error) {
-      //console log for showing the error
       console.error('Encountered error with prompt request to OpenAI', error);
     }
   }
