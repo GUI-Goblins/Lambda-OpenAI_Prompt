@@ -2,9 +2,13 @@
 
 require('dotenv').config();
 const AWS = require('aws-sdk');
-const OpenAI = require('openai');
-const openai = new OpenAI(process.env.OPENAI_API_KEY);
+// const OpenAI = require('openai');
+// const openai = new OpenAI(process.env.OPENAI_API_KEY);
 // const OPEN_AI_URL = process.env.OPEN_AI_URL;
+const axios = require('axios');
+const OPEN_AI_URL = process.env.OPEN_AI_URL;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
 const lambda = new AWS.Lambda();
 
 exports.handler = async (event) => {
@@ -13,6 +17,13 @@ exports.handler = async (event) => {
   // const requestBody = JSON.parse(event);
   const requestBody = event;
   const { user, scene, userChoice } = requestBody;
+
+  const header = {
+    headers: {
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+  };
 
   if (!requestBody.roll) {
     const data = {
@@ -26,15 +37,22 @@ exports.handler = async (event) => {
     };
     console.log('Here is our data:', data);
     try {
-      const res = await openai.chat.completions.create(data);
-      const responseData = res.choices[0].message.content;
+      // const res = await openai.chat.completions.create(data);
+      // const responseData = res.choices[0].message.content;
+      const openAiResponse = await axios.post(
+        OPEN_AI_URL,
+        data,
+        header
+      );
+      const openAi = openAiResponse.data.choices[0].message.content;
+      const responseData = JSON.parse(openAi);
 
       // return responseData;
 
       const params = {
         FunctionName: 'characterRoll',
         InvocationType: 'Event',
-        Payload: JSON.stringify(responseData),
+        Payload: JSON.stringify({responseData}),
       };
 
       const response = await lambda.invoke(params).promise();
