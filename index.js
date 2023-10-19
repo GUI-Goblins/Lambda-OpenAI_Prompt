@@ -46,7 +46,7 @@ exports.handler = async (event) => {
 
       const payload = Buffer.from(response.Payload).toString();
 
-      console.log('Response from characterRoll:', response);
+      console.log('Response from characterRoll:', response, payload);
       const result = JSON.parse(payload);
 
       // Perform additional processing if needed
