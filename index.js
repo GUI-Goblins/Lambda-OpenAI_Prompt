@@ -37,11 +37,7 @@ exports.handler = async (event) => {
     };
     console.log('Here is our data:', data);
     try {
-      const openAiResponse = await axios.post(
-        OPEN_AI_URL,
-        data,
-        header
-      );
+      const openAiResponse = await axios.post(OPEN_AI_URL, data, header);
       const openAi = openAiResponse.data.choices[0].message.content;
       console.log('Here is our open ai response before being parsed:', openAi);
       const params = {
@@ -52,9 +48,14 @@ exports.handler = async (event) => {
 
       const response = await lambda.invoke(params).promise();
 
-      if (response.FunctionError) {
-        throw new Error(`Lambda invocation error: ${response.FunctionError}`);
-      }
+      const result = JSON.parse(response.Payload);
+      console.log('Result from characterRoll:', result);
+      // Perform additional processing if needed
+      return result;
+
+      // if (response.FunctionError) {
+      //   throw new Error(`Lambda invocation error: ${response.FunctionError}`);
+      // }
     } catch (error) {
       //console log for showing the error
       console.error('Encountered error with prompt request to OpenAI', error);
@@ -74,22 +75,26 @@ exports.handler = async (event) => {
       const openAiResponse = await axios.post(OPEN_AI_URL, data, header);
       const openAi = openAiResponse.data.choices[0].message.content;
       console.log('Here is our open ai response before being parsed:', openAi);
-      const responseData = JSON.parse(openAi);
-      console.log('Here is our open ai response:', responseData);
-
-      // return responseData;
+      // const responseData = JSON.parse(openAi);
+      // console.log('Here is our open ai response:', responseData);
 
       const params = {
         FunctionName: 'characterRoll',
         InvocationType: 'RequestResponse',
-        Payload: JSON.stringify(responseData),
+        // Payload: JSON.stringify(responseData),
+        Payload: JSON.stringify(openAi),
       };
 
       const response = await lambda.invoke(params).promise();
 
-      if (response.FunctionError) {
-        throw new Error(`Lambda invocation error: ${response.FunctionError}`);
-      }
+      const result = JSON.parse(response.Payload);
+      console.log('Result from characterRoll:', result);
+      // Perform additional processing if needed
+      return result;
+      
+      // if (response.FunctionError) {
+      //   throw new Error(`Lambda invocation error: ${response.FunctionError}`);
+      // }
     } catch (error) {
       //console log for showing the error
       console.error('Encountered error with prompt request to OpenAI', error);
