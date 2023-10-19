@@ -1,7 +1,7 @@
 'use strict';
 
 require('dotenv').config();
-import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda';
+const { LambdaClient, InvokeCommand } = require('@aws-sdk/client-lambda');
 const lambda = new LambdaClient({ region: 'us-west-2' });
 const axios = require('axios');
 const OPEN_AI_URL = process.env.OPEN_AI_URL;
@@ -94,7 +94,7 @@ exports.handler = async (event) => {
       const payload = Buffer.from(response.Payload).toString();
 
       console.log('Response from characterRoll:', response);
-      
+
       const result = JSON.parse(payload);
       // Perform additional processing if needed
       return {
