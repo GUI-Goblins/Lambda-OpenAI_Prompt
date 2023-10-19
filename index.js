@@ -37,8 +37,6 @@ exports.handler = async (event) => {
     };
     console.log('Here is our data:', data);
     try {
-      // const res = await openai.chat.completions.create(data);
-      // const responseData = res.choices[0].message.content;
       const openAiResponse = await axios.post(
         OPEN_AI_URL,
         data,
@@ -46,10 +44,6 @@ exports.handler = async (event) => {
       );
       const openAi = openAiResponse.data.choices[0].message.content;
       console.log('Here is our open ai response before being parsed:', openAi);
-      // const responseData = JSON.parse(openAi);
-      // console.log('Here is our open ai response:', responseData);
-      // return responseData;
-
       const params = {
         FunctionName: 'characterRoll',
         InvocationType: 'Event',
@@ -71,7 +65,7 @@ exports.handler = async (event) => {
       messages: [
         {
           role: 'user',
-          content: `Your response will in a JSON object with the following properties. First, user object with properties name, age, race, class. Second, string named 'deathScene' that explains how the user dies based on the scene, ${scene}, and based on ${user.name}'s actions, ${userChoice}. This deathScene will be at most 2 sentences.`,
+          content: `Your response will in a JSON object with the following properties. First, user object with properties ${user.name}, ${user.age}, ${user.race}, and ${user.class}. Second, string named 'deathScene' that explains how the user dies based on the scene, ${scene}, and based on ${user.name}'s actions, ${userChoice}. This deathScene will be at most 2 sentences.`,
         },
       ],
       model: 'gpt-3.5-turbo',
