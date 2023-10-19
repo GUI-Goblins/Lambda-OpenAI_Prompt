@@ -16,7 +16,7 @@ exports.handler = async (event) => {
   console.log('We hit the event!', event);
   const requestBody = event.body;
   const user = event.user;
-  const { scene, userChoice } = requestBody;
+  const { scene, userChoice, roll } = requestBody;
 
   const header = {
     headers: {
