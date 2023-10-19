@@ -20,7 +20,13 @@ exports.handler = async (event) => {
     },
   };
 
-  if (!requestBody.roll) {
+  const keywords = ['help', 'rest', 'heal', 'aid', 'recover', ];
+
+  const includesKeyword = keywords.some((keyword) =>
+    userChoice.includes(keyword)
+  );
+
+  if (!requestBody.roll || includesKeyword) {
     const data = {
       messages: [
         {
