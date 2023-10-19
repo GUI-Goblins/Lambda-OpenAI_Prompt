@@ -14,9 +14,9 @@ const lambda = new AWS.Lambda();
 exports.handler = async (event) => {
   //console log for making sure event is being picked up
   console.log('We hit the event!', event);
-  // const requestBody = JSON.parse(event);
-  const requestBody = event;
-  const { user, scene, userChoice } = requestBody;
+  const requestBody = event.body;
+  const user = event.user;
+  const { scene, userChoice } = requestBody;
 
   const header = {
     headers: {
