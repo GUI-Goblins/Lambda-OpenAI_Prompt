@@ -45,6 +45,7 @@ exports.handler = async (event) => {
         header
       );
       const openAi = openAiResponse.data.choices[0].message.content;
+      console.log('Here is our open ai response before being parsed:', openAi);
       const responseData = JSON.parse(openAi);
       console.log('Here is our open ai response:', responseData);
       // return responseData;
@@ -77,8 +78,11 @@ exports.handler = async (event) => {
     };
     console.log('Here is our data:', data);
     try {
-      const res = await openai.chat.completions.create(data);
-      const responseData = res.choices[0].message.content;
+      const openAiResponse = await axios.post(OPEN_AI_URL, data, header);
+      const openAi = openAiResponse.data.choices[0].message.content;
+      console.log('Here is our open ai response before being parsed:', openAi);
+      const responseData = JSON.parse(openAi);
+      console.log('Here is our open ai response:', responseData);
 
       // return responseData;
 
