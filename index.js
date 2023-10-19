@@ -46,7 +46,7 @@ exports.handler = async (event) => {
       );
       const openAi = openAiResponse.data.choices[0].message.content;
       const responseData = JSON.parse(openAi);
-
+      console.log('Here is our open ai response:', responseData);
       // return responseData;
 
       const params = {
