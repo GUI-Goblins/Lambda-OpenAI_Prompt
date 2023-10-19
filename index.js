@@ -66,7 +66,7 @@ exports.handler = async (event) => {
       messages: [
         {
           role: 'user',
-          content: `Your response will in a JSON object with the following properties. First, user object with properties ${user.name}, ${user.age}, ${user.race}, and ${user.class}. Second, string named 'deathScene' that explains how the user dies based on the scene, ${scene}, and based on ${user.name}'s actions, ${userChoice}. This deathScene will be at most 2 sentences. Third, string named 'roll' with value ${roll}`,
+          content: `Your response will in a JSON object with the following properties. First, user object with properties ${user.name}, ${user.age}, ${user.race}, and ${user.class}. Second, string named 'deathScene' that explains how the user dies based on the scene, ${scene}, and based on ${user.name}'s actions, ${userChoice}. This deathScene will be at most 2 sentences that will kill the character. Third, string named 'roll' with value ${roll}`,
         },
       ],
       model: 'gpt-3.5-turbo',
