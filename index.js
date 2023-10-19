@@ -31,7 +31,7 @@ exports.handler = async (event) => {
       messages: [
         {
           role: 'user',
-          content: `An adventurer named ${user.name}, a ${user.age}-year-old ${user.race} ${user.class}, in a previous scene of ${scene}. After this scene, ${user.name} ${userChoice}. Your response will in a JSON object with the following properties. First, user object with properties name, age, race, class. Second, string named 'scene' that explains what happens next in 2 or 3 sentences. Third, array named 'options' that generates 4 options/elements in 4 words or less where each option is an action that user can choose next.`,
+          content: `An adventurer named ${user.name}, a ${user.age}-year-old ${user.race} ${user.class}, in a previous scene of ${scene}. After this scene, the character named ${user.name} picks: ${userChoice}. Your response will in a JSON object with the following properties. First, user object with properties name, age, race, class. Second, string named 'scene' that explains what happens next in 2 or 3 sentences referencing ${userChoice}. Third, array named 'options' that generates 4 options/elements in 4 words or less where each option is an action that user can choose next.`,
         },
       ],
       model: 'gpt-3.5-turbo',
