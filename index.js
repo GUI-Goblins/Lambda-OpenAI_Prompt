@@ -51,7 +51,10 @@ exports.handler = async (event) => {
       const result = JSON.parse(response.Payload);
       console.log('Result from characterRoll:', result);
       // Perform additional processing if needed
-      return result;
+      return {
+        statusCode: 200,
+        body: JSON.stringify(result),
+      };
 
       // if (response.FunctionError) {
       //   throw new Error(`Lambda invocation error: ${response.FunctionError}`);
@@ -90,7 +93,10 @@ exports.handler = async (event) => {
       const result = JSON.parse(response.Payload);
       console.log('Result from characterRoll:', result);
       // Perform additional processing if needed
-      return result;
+      return {
+        statusCode: 200,
+        body: JSON.stringify(result),
+      };
       
       // if (response.FunctionError) {
       //   throw new Error(`Lambda invocation error: ${response.FunctionError}`);
