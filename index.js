@@ -37,7 +37,7 @@ exports.handler = async (event) => {
       const openAi = openAiResponse.data.choices[0].message.content;
       console.log('Here is our open ai response before being parsed:', openAi);
       const params = {
-        FunctionName: 'characterRoll',
+        FunctionName: 'testFunction',
         InvocationType: 'RequestResponse',
         Payload: JSON.stringify(openAi),
       };
@@ -46,7 +46,7 @@ exports.handler = async (event) => {
 
       const payload = Buffer.from(response.Payload).toString();
 
-      console.log('Response from characterRoll:', response, payload);
+      console.log('Response from testFunction:', response, payload);
       const result = JSON.parse(payload);
 
       // Perform additional processing if needed
