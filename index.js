@@ -51,7 +51,6 @@ exports.handler = async (event) => {
       };
 
       const response = await lambda.invoke(params).promise();
-      console.log("HERES THE RESPONSE FROM CHAR ROLL", response.body);
 
       if (response.FunctionError) {
         throw new Error(`Lambda invocation error: ${response.FunctionError}`);
@@ -87,7 +86,6 @@ exports.handler = async (event) => {
       };
 
       const response = await lambda.invoke(params).promise();
-      console.log('HERES THE RESPONSE FROM CHAR ROLL', response.body);
 
       if (response.FunctionError) {
         throw new Error(`Lambda invocation error: ${response.FunctionError}`);
