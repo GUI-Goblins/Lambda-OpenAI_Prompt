@@ -46,14 +46,14 @@ exports.handler = async (event) => {
       );
       const openAi = openAiResponse.data.choices[0].message.content;
       console.log('Here is our open ai response before being parsed:', openAi);
-      const responseData = JSON.parse(openAi);
-      console.log('Here is our open ai response:', responseData);
+      // const responseData = JSON.parse(openAi);
+      // console.log('Here is our open ai response:', responseData);
       // return responseData;
 
       const params = {
         FunctionName: 'characterRoll',
         InvocationType: 'Event',
-        Payload: JSON.stringify({responseData}),
+        Payload: JSON.stringify(openAi),
       };
 
       const response = await lambda.invoke(params).promise();
